@@ -1,72 +1,79 @@
+#include "menu.h"
 #include <iostream>
-#include <mysql_driver.h>
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
-#include "menu.h"
 
-using namespace std;
+Menu::Menu() : id(0), price(0.0) {}
 
-void create_menu(sql::Connection* conn) {
-    string name, description, category;
-    double price;
-    cout << "\n=== Tambah Menu Baru ===\n";
-    cin.ignore();
-    cout << "Nama Menu: "; getline(cin, name);
-    cout << "Deskripsi: "; getline(cin, description);
-    cout << "Kategori: "; getline(cin, category);
-    cout << "Harga: "; cin >> price;
+Menu::Menu(int id, const std::string& name, const std::string& desc, const std::string& category, double price)
+    : id(id), name(name), description(desc), category(category), price(price) {
+}
 
+void Menu::input_from_console() {
+    std::cin.ignore();
+    std::cout << "Nama menu: "; std::getline(std::cin, name);
+    std::cout << "Deskripsi: "; std::getline(std::cin, description);
+    std::cout << "Kategori: "; std::getline(std::cin, category);
+    std::cout << "Harga: "; std::cin >> price;
+}
+
+void Menu::create(sql::Connection* conn) {
     sql::PreparedStatement* pstmt = conn->prepareStatement(
-        "INSERT INTO menus (name, description, price, category) VALUES (?, ?, ?, ?)"
+        "INSERT INTO menus (name, description, category, price) VALUES (?, ?, ?, ?)"
     );
     pstmt->setString(1, name);
     pstmt->setString(2, description);
-    pstmt->setDouble(3, price);
-    pstmt->setString(4, category);
+    pstmt->setString(3, category);
+    pstmt->setDouble(4, price);
     pstmt->executeUpdate();
     delete pstmt;
-
-    cout << "Menu berhasil ditambahkan.\n";
+    std::cout << "Menu berhasil ditambahkan.\n";
 }
 
-void read_menus(sql::Connection* conn) {
-    cout << "\n=== Daftar Menu ===\n";
+void Menu::read_all(sql::Connection* conn) {
     sql::PreparedStatement* pstmt = conn->prepareStatement("SELECT * FROM menus");
     sql::ResultSet* res = pstmt->executeQuery();
-
+    std::cout << "\n=== DAFTAR MENU ===\n";
     while (res->next()) {
-        cout << "ID: " << res->getInt("id_menu") << ", Nama: " << res->getString("name")
-            << ", Harga: Rp" << res->getDouble("price") << ", Kategori: " << res->getString("category") << endl;
+        std::cout << res->getInt("id_menu") << ". "
+            << res->getString("name") << " - "
+            << res->getString("category") << " - Rp"
+            << res->getDouble("price") << "\n"
+            << "   " << res->getString("description") << "\n";
     }
     delete res;
     delete pstmt;
 }
 
-void update_menu(sql::Connection* conn) {
-    int id;
-    double new_price;
-    cout << "\n=== Ubah Harga Menu ===\n";
-    cout << "ID Menu: "; cin >> id;
-    cout << "Harga Baru: "; cin >> new_price;
-
-    sql::PreparedStatement* pstmt = conn->prepareStatement("UPDATE menus SET price = ? WHERE id_menu = ?");
-    pstmt->setDouble(1, new_price);
-    pstmt->setInt(2, id);
+void Menu::update(sql::Connection* conn) {
+    input_from_console();
+    sql::PreparedStatement* pstmt = conn->prepareStatement(
+        "UPDATE menus SET name=?, description=?, category=?, price=? WHERE id_menu=?"
+    );
+    pstmt->setString(1, name);
+    pstmt->setString(2, description);
+    pstmt->setString(3, category);
+    pstmt->setDouble(4, price);
+    pstmt->setInt(5, id);
     pstmt->executeUpdate();
     delete pstmt;
-
-    cout << "Harga menu berhasil diperbarui.\n";
+    std::cout << "Menu berhasil diperbarui.\n";
 }
 
-void delete_menu(sql::Connection* conn) {
-    int id;
-    cout << "\n=== Hapus Menu ===\n";
-    cout << "ID Menu: "; cin >> id;
-
-    sql::PreparedStatement* pstmt = conn->prepareStatement("DELETE FROM menus WHERE id_menu = ?");
+void Menu::remove(sql::Connection* conn) {
+    sql::PreparedStatement* pstmt = conn->prepareStatement(
+        "DELETE FROM menus WHERE id_menu=?"
+    );
     pstmt->setInt(1, id);
     pstmt->executeUpdate();
     delete pstmt;
+    std::cout << "Menu berhasil dihapus.\n";
+}
 
-    cout << "Menu berhasil dihapus.\n";
+int Menu::get_id() const {
+    return id;
+}
+
+void Menu::set_id(int menu_id) {
+    id = menu_id;
 }

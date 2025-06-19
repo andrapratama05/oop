@@ -21,31 +21,37 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="order.cpp">
+    <ClCompile Include="order_class.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="menu.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="user.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="auth.cpp">
       <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="user_class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user_inheritance.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menu.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
-    <ClInclude Include="order.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="user.h">
+    <ClInclude Include="order_class.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
     <ClInclude Include="auth.h">
       <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="user_class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user_inheritance.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,29 @@
-#pragma once
 #ifndef MENU_H
 #define MENU_H
 
+#include <string>
 #include <mysql_connection.h>
 
-void create_menu(sql::Connection* conn);
-void read_menus(sql::Connection* conn);
-void update_menu(sql::Connection* conn);
-void delete_menu(sql::Connection* conn);
+class Menu {
+private:
+    int id;
+    std::string name;
+    std::string description;
+    std::string category;
+    double price;
+
+public:
+    Menu();
+    Menu(int id, const std::string& name, const std::string& desc, const std::string& category, double price);
+
+    void create(sql::Connection* conn);
+    static void read_all(sql::Connection* conn);
+    void update(sql::Connection* conn);
+    void remove(sql::Connection* conn);
+
+    void input_from_console();
+    int get_id() const;
+    void set_id(int menu_id);
+};
 
 #endif

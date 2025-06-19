@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,14 +129,16 @@
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="order.cpp" />
-    <ClCompile Include="user.cpp" />
+    <ClCompile Include="order_class.cpp" />
+    <ClCompile Include="user_class.cpp" />
+    <ClCompile Include="user_inheritance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auth.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="order.h" />
-    <ClInclude Include="user.h" />
+    <ClInclude Include="order_class.h" />
+    <ClInclude Include="user_class.h" />
+    <ClInclude Include="user_inheritance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
